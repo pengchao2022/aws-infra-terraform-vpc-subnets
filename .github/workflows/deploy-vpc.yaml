@@ -66,7 +66,7 @@ jobs:
 
       - name: Display outputs
         run: |
-          echo "✅ VPC 创建成功！"
+          echo "✅ VPC Successfully Created!"
           echo "VPC ID: ${{ steps.output.outputs.vpc_id }}"
           echo "公有子网: ${{ steps.output.outputs.public_subnet_ids }}"
           echo "私有子网: ${{ steps.output.outputs.private_subnet_ids }}"
