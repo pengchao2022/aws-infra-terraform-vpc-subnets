@@ -7,7 +7,7 @@ variable "aws_region" {
 variable "vpc_name" {
   description = "Name of the VPC"
   type        = string
-  default     = "my-vpc"
+  default     = "eks-vpc"
 }
 
 variable "vpc_cidr" {
