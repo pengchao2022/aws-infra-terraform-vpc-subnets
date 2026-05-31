@@ -2,7 +2,7 @@ provider "aws" {
   region = var.aws_region
 }
 
-# 获取可用区
+# get the AZ
 data "aws_availability_zones" "available" {
   state = "available"
 }
@@ -31,7 +31,7 @@ resource "aws_internet_gateway" "main" {
   }
 }
 
-# 公有子网（3个，分布在不同的可用区）
+# create public subnets
 resource "aws_subnet" "public" {
   count                   = var.public_subnet_count
   vpc_id                  = aws_vpc.main.id
@@ -47,7 +47,7 @@ resource "aws_subnet" "public" {
   }
 }
 
-# 私有子网（3个，分布在不同的可用区）
+# create private subnets
 resource "aws_subnet" "private" {
   count             = var.private_subnet_count
   vpc_id            = aws_vpc.main.id
@@ -62,7 +62,7 @@ resource "aws_subnet" "private" {
   }
 }
 
-# 公有路由表
+# public route table
 resource "aws_route_table" "public" {
   vpc_id = aws_vpc.main.id
 
@@ -78,14 +78,14 @@ resource "aws_route_table" "public" {
   }
 }
 
-# 公有子网关联路由表
+# public subnets attach route table
 resource "aws_route_table_association" "public" {
   count          = var.public_subnet_count
   subnet_id      = aws_subnet.public[count.index].id
   route_table_id = aws_route_table.public.id
 }
 
-# 私有路由表（每个私有子网一个独立的）
+# private route table
 resource "aws_route_table" "private" {
   count  = var.private_subnet_count
   vpc_id = aws_vpc.main.id
@@ -97,7 +97,7 @@ resource "aws_route_table" "private" {
   }
 }
 
-# 私有子网关联各自的路由表
+# private subnets attach route table
 resource "aws_route_table_association" "private" {
   count          = var.private_subnet_count
   subnet_id      = aws_subnet.private[count.index].id
