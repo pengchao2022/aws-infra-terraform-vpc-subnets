@@ -39,12 +39,12 @@ jobs:
         with:
           terraform_version: 1.7.0
 
-      # 只初始化一次
       - name: Terraform Init
-        run: terraform init -reconfigure
-        working-directory: ./terraform
+        run: |
+          cd terraform 
+          terraform init -reconfigure
 
-      # 获取 VPC ID（在 destroy 之前）
+    
       - name: Get VPC ID before destroy
         id: get_vpc
         run: |
@@ -55,23 +55,22 @@ jobs:
           if terraform state list 2>/dev/null | grep -q "aws_vpc.main"; then
             VPC_ID=$(terraform output -raw vpc_id 2>/dev/null || echo "unknown")
             echo "vpc_id=$VPC_ID" >> $GITHUB_OUTPUT
-            echo "✅ 找到 VPC: $VPC_ID"
+            echo "✅ Found VPC: $VPC_ID"
           else
             echo "vpc_id=not_found" >> $GITHUB_OUTPUT
-            echo "⚠️ 状态文件中没有找到 VPC 资源"
-            echo "状态文件中的资源列表："
+            echo "We can't find VPC in state file"
+            echo "The resources in state file are:"
             terraform state list
           fi
-        working-directory: ./terraform
 
-      # 执行销毁
+      
       - name: Terraform Destroy
-        run: terraform destroy -auto-approve
-        working-directory: ./terraform
+        run: |
+          cd terraform
+          terraform destroy -auto-approve
         env:
           TF_VAR_environment: ${{ github.event.inputs.environment }}
 
-      # 验证结果
       - name: Verify destruction
         run: |
           echo "========================================="
