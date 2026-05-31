@@ -39,7 +39,7 @@ jobs:
           terraform_version: 1.7.0
 
       - name: Terraform Init
-        run: terraform init -reconfigure -migrate-state
+        run: terraform init -migrate-state
         working-directory: ./terraform
 
       - name: Terraform Validate
