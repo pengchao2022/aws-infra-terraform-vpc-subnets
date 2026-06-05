@@ -1,6 +1,6 @@
 # Terraform AWS VPC Module
 
-This repository uses Terraform to deploy a complete AWS VPC infrastructure. When changes are merged to the `main` branch, GitHub Actions automatically deploys the infrastructure. Resource destruction must be performed manually.
+This repository uses Terraform to deploy a complete AWS VPC infrastructure. When changes are merged to the `main` branch, GitHub Actions automatically deploys the infrastructure. You can modify terraform.tfvars file to destroy or remove the infrastructure VPCs.
 
 ## Architecture Overview
 
