@@ -3,7 +3,7 @@ terraform {
 
     bucket = "pengchao2022-terraform-state"
 
-    key = "vpc/terraform.tfstate"
+    key = "vpc/1-terraform.tfstate"
     
     
     region = "us-east-1"
