@@ -83,7 +83,7 @@ resource "aws_eip" "nat" {
   domain = "vpc"
 }
 
-# 创建 NAT Gateway
+# Create NAT Gateway
 resource "aws_nat_gateway" "main" {
   count         = var.enable_nat_gateway ? 1 : 0
   allocation_id = aws_eip.nat[0].id
